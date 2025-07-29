@@ -1,12 +1,14 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaChartPie, FaUsers, FaTasks, FaCog } from "react-icons/fa";
+import TaskFilter from "../tasks/TaskFilter";
 
-const Sidebar = () => {
+const Sidebar = React.memo(() => {
   const location = useLocation();
 
   // Sidebar menu items with icons
   const menuItems = [
+    { path: "/admin/task-filter", label: "Filter Tasks", icon: <FaTasks /> },
     { path: "/admin/dashboard", label: "Dashboard", icon: <FaChartPie /> },
     { path: "/admin/manage-users", label: "Manage Users", icon: <FaUsers /> },
     { path: "/admin/manage-tasks", label: "Manage Tasks", icon: <FaTasks /> },
@@ -36,6 +38,6 @@ const Sidebar = () => {
       </ul>
     </div>
   );
-};
+});
 
 export default Sidebar;

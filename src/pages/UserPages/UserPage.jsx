@@ -33,7 +33,7 @@ const UserPage = () => {
     
     // ✅ Assign task to logged-in user
     const newTaskItem = { 
-      id: taskId, 
+      _id: taskId, 
       ...newTask, 
       assignedTo: loggedInUser // ✅ Store assigned user
     };
@@ -155,7 +155,7 @@ const UserPage = () => {
             <p className="text-gray-600">No tasks created yet. Start by adding a task!</p>
           ) : (
             tasks.map((task) => (
-              <div key={task.id} className="bg-white shadow-md p-4 rounded-md border-l-4 border-blue-400">
+              <div key={task._id} className="bg-white shadow-md p-4 rounded-md border-l-4 border-blue-400">
                 <h3 className="text-lg font-semibold">{task.title}</h3>
                 <p className="text-gray-600">{task.description}</p>
 

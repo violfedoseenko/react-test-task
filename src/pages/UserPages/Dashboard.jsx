@@ -120,9 +120,9 @@ const UserDashboard = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {Object.keys(tasks).map((columnKey) => (
                 <Column key={columnKey} title={columnKey} id={columnKey} className="w-[280px]">
-                  <SortableContext items={tasks[columnKey].map((task) => task.id)} strategy={verticalListSortingStrategy}>
+                  <SortableContext items={tasks[columnKey].map((task) => task._id)} strategy={verticalListSortingStrategy}>
                     {tasks[columnKey].map((task) => (
-                      <SortableItem key={task.id} id={task.id} task={task} />
+                      <SortableItem key={task._id} id={task._id} task={task} />
                     ))}
                   </SortableContext>
                 </Column>

@@ -21,7 +21,7 @@ const ManageTasks = () => {
 
   // ❌ Delete a task
   const deleteTask = (id) => {
-    const updatedTasks = tasks.filter((task) => task.id !== id);
+    const updatedTasks = tasks.filter((task) => task._id !== id);
     setTasks(updatedTasks);
     localStorage.setItem("tasks", JSON.stringify(updatedTasks));
   };
@@ -52,7 +52,7 @@ const ManageTasks = () => {
               {tasks
                 .filter((task) => task.progress < 100)
                 .map((task) => (
-                  <tr key={task.id} className="border-b">
+                  <tr key={task._id} className="border-b">
                     <td className="p-2">{task.title}</td>
                     <td className="p-2">{task.email}</td>
                     <td className="p-2">{task.priority}</td>
@@ -66,7 +66,7 @@ const ManageTasks = () => {
                       </button>
                       <button
                         className="bg-red-500 text-white px-3 py-1 rounded ml-2 hover:bg-red-600"
-                        onClick={() => deleteTask(task.id)}
+                        onClick={() => deleteTask(task._id)}
                       >
                         ❌ Delete
                       </button>
@@ -93,7 +93,7 @@ const ManageTasks = () => {
               {tasks
                 .filter((task) => task.progress === 100)
                 .map((task) => (
-                  <tr key={task.id} className="border-b">
+                  <tr key={task._id} className="border-b">
                     <td className="p-2">{task.title}</td>
                     <td className="p-2">{task.email}</td>
                     <td className="p-2">{task.priority}</td>

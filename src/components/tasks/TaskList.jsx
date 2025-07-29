@@ -137,6 +137,7 @@ const TaskList = () => {
       task._id === taskId 
         ? { 
             ...task, 
+            key: taskId,
             status: task.status === 'complete' ? 'incomplete' : 'complete',
             updatedAt: new Date().toISOString()
           } 

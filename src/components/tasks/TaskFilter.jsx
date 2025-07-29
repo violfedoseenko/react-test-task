@@ -18,6 +18,9 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { FaSearch, FaFilter, FaSpinner, FaExclamationTriangle, FaTasks } from 'react-icons/fa';
+import Sidebar from '../admin/Sidebar';
+import UserSidebar from '../../pages/UserPages/UserSidebar';
+import { useAuth } from "../../contexts/AuthContext";
 
 const TaskFilter = () => {
   // State management with proper initialization
@@ -34,6 +37,11 @@ const TaskFilter = () => {
     complete: 0,
     incomplete: 0
   });
+    const { isAdmin } = useAuth();
+
+    const getSideBar = useCallback(() => {
+      return isAdmin() ? <Sidebar /> : <UserSidebar />
+    }, [isAdmin])
 
   /**
    * Load tasks from localStorage
@@ -159,9 +167,15 @@ const TaskFilter = () => {
   // Loading state
   if (loading) {
     return (
-      <div className="p-6 flex justify-center items-center" aria-live="polite" role="status">
-        <FaSpinner className="animate-spin text-blue-500 text-2xl" aria-hidden="true" />
-        <span className="ml-2">Loading tasks...</span>
+      <div className="flex min-h-screen bg-gray-100">
+        {/* Sidebar */}
+        {getSideBar()}
+         <div className="flex-1 p-6">
+        <div className="p-6 flex justify-center items-center" aria-live="polite" role="status">
+          <FaSpinner className="animate-spin text-blue-500 text-2xl" aria-hidden="true" />
+          <span className="ml-2">Loading tasks...</span>
+        </div>
+        </div>
       </div>
     );
   }
@@ -177,7 +191,10 @@ const TaskFilter = () => {
   }
 
   return (
-    <div className="bg-white p-6 rounded-lg shadow">
+    <div className="flex min-h-screen bg-gray-100">
+      {/* Sidebar */}
+      {getSideBar()}
+      <div className="flex-1 p-6">
       <h2 className="text-2xl font-bold mb-6 text-gray-800 flex items-center">
         <FaTasks className="mr-2" aria-hidden="true" />
         Task Filter
@@ -295,9 +312,10 @@ const TaskFilter = () => {
                 )}
               </div>
             </li>
-          ))}
+))}
         </ul>
       )}
+    </div>
     </div>
   );
 };
