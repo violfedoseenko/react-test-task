@@ -36,6 +36,7 @@ const Signup = () => {
     message: "",
     color: "gray"
   });
+  const [role, setRole] = useState("user");
   
   // Hooks initialization
   const { signup } = useAuth();
@@ -43,9 +44,12 @@ const Signup = () => {
   const location = useLocation();
   
   // Extract role from location state or default to user
-  const role = location.state?.role || "user";
   const { fullName, email, password } = formData; 
 
+    useEffect(() => {
+      location.state?.role && setRole(location.state?.role);
+    }, []);
+    
   /**
    * Effect hook to check for existing authentication
    * Redirects authenticated users to appropriate dashboard
@@ -355,6 +359,17 @@ const Signup = () => {
 
         {/* Additional links */}
         <div className="text-center mt-4">
+          <div className="flex items-center justify-center gap-2">
+            <span className="text-sm text-gray-600">Role:</span>
+            <select
+              value={role}
+              onChange={(e) => setRole(e.target.value)}
+              className="text-sm text-gray-800 border border-gray-300 rounded-md px-2 py-1 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            >
+              <option value="user">User</option>
+              <option value="admin">Admin</option>
+            </select>
+            </div>
           <span className="text-gray-600 text-sm">Already have an account? </span>
           <Link
             to="/login"
