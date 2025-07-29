@@ -87,7 +87,7 @@ const AuthProvider = ({ children }) => {
    * @param {string} password - User's password (not used in mock implementation)
    * @returns {Promise<Object>} User data
    */
-  const login = async (email, password) => {
+  const login = async (email) => {
     // In a real app, this would make an API call
     // For this demo, we just update the state
     setUser({ email });
@@ -100,7 +100,7 @@ const AuthProvider = ({ children }) => {
    * @param {string} password - User's password
    * @returns {Promise<Object>} User data
    */
-  const signup = async (email, password) => {
+  const signup = async (email) => {
     // In a real app, this would make an API call
     // For this demo, we just update the state
     setUser({ email });
@@ -158,7 +158,7 @@ const AuthProvider = ({ children }) => {
     resetPassword,
     hasRole,
     isAdmin: () => hasRole("admin"),
-    isAuthenticated: !!user,
+    isAuthenticated: !!user
   };
 
   return (

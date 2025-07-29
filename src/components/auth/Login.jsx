@@ -57,70 +57,45 @@ const Login = () => {
    */
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+      
     // Input validation
     if (!email.trim() || !password.trim()) {
       setError("Email and password are required");
       return;
     }
-    
+
     // Reset previous errors
     setError("");
     setLoading(true);
-    
+
     try {
-      // Simulate network latency for realistic UX
-      await new Promise(resolve => setTimeout(resolve, 800));
-      
-      // Get stored users from localStorage or initialize with default users
-      const storedUsers = JSON.parse(localStorage.getItem('users') || JSON.stringify([
-        { email: 'admin@example.com', password: 'password123', role: 'admin', userId: 'admin-123' },
-        { email: 'user@example.com', password: 'password123', role: 'user', userId: 'user-456' }
-      ]));
-      
-      // Find matching user
-      const user = storedUsers.find(u => u.email === email && u.password === password);
-      
-      if (user) {
-        // User found, proceed with login
-        const mockToken = `mock-token-${Date.now()}`;
-        
-        // Store authentication data in localStorage for persistence
-        localStorage.setItem("token", mockToken);
-        localStorage.setItem("userRole", user.role);
-        localStorage.setItem("userId", user.userId);
-        localStorage.setItem("email", email);
-        
-        // Create log entry for admin tracking
-        const logData = {
-          userId: user.userId,
-          username: email,
-          role: user.role,
-          action: "login",
-          loginTime: new Date().toISOString(),
-          ipAddress: "127.0.0.1", // In production, this would be captured from the request
-          tokenName: mockToken.substring(0, 10) + "..." // Truncated for security
-        };
-        
-        // Store login logs in localStorage for admin view
-        const existingLogs = JSON.parse(localStorage.getItem('userLogs') || '[]');
-        existingLogs.push(logData);
-        localStorage.setItem('userLogs', JSON.stringify(existingLogs));
-        
-        console.log("User login:", logData);
-        
-        // Update authentication context
-        login(email);
-        
-        // Navigate to appropriate dashboard or requested page
-        navigate(from !== "/" ? from : (user.role === "admin" ? "/admin/dashboard" : "/user/dashboard"));
-      } else {
-        // Invalid credentials
-        setError("Invalid email or password");
+      const res = await fetch("http://localhost:5000/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, password, role })
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.message || "Login failed");
       }
+
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("userRole", data.role);
+      localStorage.setItem("email", email);
+
+      // Update authentication context
+      login(email);
+
+      // Navigate to appropriate dashboard or requested page
+      navigate(from !== "/" ? from : (data.role === "admin" ? "/admin/dashboard" : "/user/dashboard"));
+
     } catch (err) {
       console.error("Login error:", err);
-      setError("An unexpected error occurred. Please try again.");
+        setError("An unexpected error occurred. Please try again.");
     } finally {
       setLoading(false);
     }
