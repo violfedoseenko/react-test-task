@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState } from "react";
 import Sidebar from "../../components/admin/Sidebar";
 
 const Settings = () => {

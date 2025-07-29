@@ -49,7 +49,7 @@ const UserPage = () => {
 
   // Handle Task Deletion
   const handleDeleteTask = (taskId) => {
-    const updatedTasks = tasks.filter((task) => task.id !== taskId);
+    const updatedTasks = tasks.filter((task) => task._id !== taskId);
     setTasks(updatedTasks);
     localStorage.setItem("tasks", JSON.stringify(updatedTasks));
 
@@ -59,7 +59,7 @@ const UserPage = () => {
   // Handle Progress Update
   const updateProgress = (taskId, progress) => {
     const updatedTasks = tasks.map((task) =>
-      task.id === taskId ? { ...task, progress: parseInt(progress) } : task
+      task._id === taskId ? { ...task, progress: parseInt(progress) } : task
     );
 
     setTasks(updatedTasks);
@@ -179,7 +179,7 @@ const UserPage = () => {
                     min="0"
                     max="100"
                     value={task.progress}
-                    onChange={(e) => updateProgress(task.id, e.target.value)}
+                    onChange={(e) => updateProgress(task._id, e.target.value)}
                     className="w-full mt-2 accent-blue-600"
                   />
                   <span className="text-sm font-medium text-gray-700">{task.progress}% Completed</span>
