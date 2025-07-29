@@ -10,6 +10,7 @@ const Sidebar = React.memo(() => {
   const menuItems = [
     { path: "/admin/task-filter", label: "Filter Tasks", icon: <FaTasks /> },
     { path: "/admin/dashboard", label: "Dashboard", icon: <FaChartPie /> },
+    { path: "/admin/user-logs", label: "User Log", icon: <FaTasks /> },
     { path: "/admin/manage-users", label: "Manage Users", icon: <FaUsers /> },
     { path: "/admin/manage-tasks", label: "Manage Tasks", icon: <FaTasks /> },
     { path: "/admin/settings", label: "Settings", icon: <FaCog /> },
